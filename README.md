@@ -9,7 +9,7 @@ A tiny Message Board for 'MEN'(MongoDB + Express4 + Node.js) beginers!
 * users' authority management(with comments) 
 
 # Launch
-After launch mongodb database,
+After launching mongodb database,
 >\> npm install   
 >\> npm start
 
