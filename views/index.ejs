@@ -1,0 +1,14 @@
+<%- include header %>
+<% if (!user) { %>
+    请登录！
+<% } else { %>
+    欢迎！ <%= user.name %>
+    <br/><br/><br/>
+    <b>您的个人信息如下：</b><br /><br />
+    - 头像：<br /><br /><img src="/upload/<%= user.head_pic %>" alt="头像" height="100" width="100"/><br /><br />
+    - 用户名：<%= user.name %><br /><br />
+    - 邮箱：<%= user.email %><br /><br />
+    - 个人简介：<%- user.intro %><br/><br/>
+    <a href="/edit">点击修改个人信息</a>
+<% } %>
+<%- include footer %>

@@ -1,0 +1,10 @@
+<%- include header %>
+<form method="post" enctype="multipart/form-data"><br />
+    用户名*：<input type="text" name="name" value="<%= user.name %>"/>（唯一）<br />
+    邮箱*：<input type="email" name="email" value="<%= user.email %>"/><br /><br />
+    个人简介*：（支持 Markdown 格式）<textarea name="intro" rows="3" cols="90"><%- user.intro %></textarea><br /><br />
+    头像：<br /><img src="/upload/<%= user.head_pic %>" alt="头像" height="100" width="100"/><br />
+    修改头像：<input type="file" name="pic"/><br /><br />
+    <input type="submit" value="修  改">
+</form>
+<%- include footer %>

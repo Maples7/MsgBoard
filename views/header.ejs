@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Message Board</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<header>
+    <h1><%= title %></h1>
+</header>
+<nav>
+    <span><a title="主页" href="/">home</a></span>
+    <% if (user) { %>
+    <span><a title="留言板" href="/msgboard">Message Board</a></span>
+    <span><a title="登出" href="/logout">logout</a></span>
+    <% } else { %>
+    <span><a title="登录" href="/login">login</a></span>
+    <span><a title="注册" href="/reg">register</a></span>
+    <% } %>
+</nav>
+
+<article>
+    <% if (success) { %>
+    <div><b><%= success %></b></div>
+    <% } %>
+    <% if (error) { %>
+    <div><b><%= error %></b></div>
+    <% } %>

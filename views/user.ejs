@@ -1,0 +1,7 @@
+<%- include header %>
+<b><%= view_user.name %> 的个人信息如下：</b><br /><br />
+- 头像：<br /><br /><img src="/upload/<%= view_user.head_pic %>" alt="头像" height="100" width="100"/><br /><br />
+- 用户名：<%= view_user.name %><br /><br />
+- 邮箱：<%= view_user.email %><br /><br />
+- 个人简介：<%- view_user.intro %><br/>
+<%- include footer %>

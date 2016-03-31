@@ -1,0 +1,19 @@
+<%- include header %>
+<form method="post">
+    <br/>请留言：（支持 Markdown格式）<br />
+    <textarea name="message" rows="7" cols="83"></textarea><br/>
+    <input type="submit" value="加上去！"/>
+</form><br/>
+<% messages.forEach(function (message, index) { %>
+    <p style="background-color: skyblue">
+        <a href="/u/<%= message.user_name %>"><%= message.user_name %></a>
+        <span class="info"> 回复于 <%= getTime(message.time) %>：</span>
+        <% if (message.user_name === user.name) { %>
+        <a href="/delMsg/<%= message._id %>" style="float: right">删除此留言</a>
+        <% } %>
+    </p>
+    <p><%- message.content %></p>
+    <%- include comment %>
+<% }); %>
+<%- include paging %>
+<%- include footer%>

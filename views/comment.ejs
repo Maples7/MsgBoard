@@ -1,0 +1,19 @@
+<% message.comments.forEach(function (comment, index) { %>
+    <p style="background-color: blanchedalmond">
+        <a href="/u/<%= comment.user_name %>"><%= comment.user_name %></a>
+        <span class="info"> 回复于 <%= getTime(comment.time) %>：</span>
+        <% if (comment.user_name === user.name) { %>
+        <a href="/delCom/<%= message._id %>/<%= comment.id %>/1" style="float: right">删除此评论</a>
+        <% } else if (message.user_name === user.name) { %>
+        <a href="/delCom/<%= message._id %>/<%= comment.id %>/2" style="float: right">删除此评论</a>
+        <% } %>
+        <%- comment.content %>
+    </p>
+<% }) %>
+<form method="post" action="/comment">
+    <textarea name="content" rows="5" cols="80"></textarea><br />
+    <input type="hidden" name="father_id" value="<%= message._id %>"/>
+    <input type="hidden" name="comment_id" value="<%= message.count_comments %>"/>
+    <input type="submit" value="评论"/> （支持 Markdown 格式）
+</form>
+<br />
