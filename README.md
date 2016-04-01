@@ -1,5 +1,5 @@
 # MsgBoard
-A tiny Message Board for 'MEN'(MongoDB + Express4 + Node.js) beginers!
+A tiny Message Board for 'MEN'(MongoDB + Express4 + Node.js) beginers with Promise-style async stream controller(bluebird)!
 
 ## Features
 * register/login and so on with user-related operations
