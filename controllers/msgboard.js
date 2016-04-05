@@ -16,12 +16,15 @@ var msgboard_get = function (req, res) {
   var query = {};
 
   Message.find(query).count().exec().then(function (total) {
-    return Message.find(query).skip((page - 1) * NUM_EACH_PAGE).limit(NUM_EACH_PAGE)
+    return Message.find(query).populate('user_id', 'name').populate('comments.user_id', 'name')
+      .skip((page - 1) * NUM_EACH_PAGE).limit(NUM_EACH_PAGE)
       .sort({time: -1}).exec().then(function (messages) {
         messages.forEach(function (message) {
           if (message) {
+            message.user_name = message.user_id.name;
             message.content = markdown.toHTML(message.content);
             message.comments.forEach(function (comment) {
+              comment.user_name = comment.user_id.name;
               comment.content = markdown.toHTML(comment.content);
             });
           }
@@ -46,14 +49,14 @@ var msgboard_get = function (req, res) {
 
 var msgboard_post = function (req, res) {
   Promise.try(function () {
-    var current_user = req.session.user;
+    var current_user_id = req.session.user._id;
     var message = req.body.message && req.body.message.trim();
     if (!message) {
       return Promise.reject('请填写具体的留言内容！');
     }
 
     var message = new Message({
-      user_name: current_user.name,
+      user_id: current_user_id,
       content: message,
       time: new Date(),
       count_comments: 0,
@@ -72,10 +75,10 @@ var msgboard_post = function (req, res) {
 
 var del_msg = function (req, res) {
   var msg_id = req.params.msg_id;
-  var current_user = req.session.user.name;
+  var current_user_id = req.session.user._id;
   Message.findOneAndRemove({
     _id: ObjectID(msg_id),
-    user_name: current_user
+    user_id: current_user_id
   }).exec().then(function (result) {
     if (result) {
       req.flash('success', '删除留言成功！');

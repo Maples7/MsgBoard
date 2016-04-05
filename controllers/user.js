@@ -37,32 +37,38 @@ var edit_post = function (req, res) {
     } else {
       new_head_pic = new_head_pic.pic.name;
     }
-    
-    return User.findOneAndUpdate({name: old_name}, {
-      $set: {
-        name: new_name,
-        email: email,
-        intro: intro,
-        head_pic: new_head_pic
+
+    return User.findOne({name: new_name}).then(function (user) {
+      if (user && user.name != old_name) {
+        return Promise.reject('该用户名已被占用！');
       }
-    }).exec(function (err) {
-      if (err) {
-        return Promise.reject(err.message);
-      }
-      
-      current_user.name = new_name;
-      current_user.email = email;
-      current_user.intro = intro;
-      current_user.head_pic = new_head_pic;
-      
-      if (new_head_pic !== old_head_pic) {
-        fs.unlink(UPLOAD_DIR + old_head_pic, function (err) {
-          if (err) {
-            req.flash('error', '删除旧头像失败： ' + err.message);
-          }
-        });
-      }
-    }).return('修改成功！');
+    }).then(function () {
+      return User.findOneAndUpdate({name: old_name}, {
+        $set: {
+          name: new_name,
+          email: email,
+          intro: intro,
+          head_pic: new_head_pic
+        }
+      }).exec(function (err) {
+        if (err) {
+          return Promise.reject(err.message);
+        }
+
+        current_user.name = new_name;
+        current_user.email = email;
+        current_user.intro = intro;
+        current_user.head_pic = new_head_pic;
+
+        if (new_head_pic !== old_head_pic) {
+          fs.unlink(UPLOAD_DIR + old_head_pic, function (err) {
+            if (err) {
+              req.flash('error', '删除旧头像失败： ' + err.message);
+            }
+          });
+        }
+      }).return('修改成功！');
+    });
   }).then(function (message) {
     req.flash('success', message);
     return res.redirect('/');

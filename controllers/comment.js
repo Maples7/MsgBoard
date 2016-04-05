@@ -8,7 +8,7 @@ var Message = require('../models/msgboard.js');
 var ObjectID = mongoose.Types.ObjectId;
 
 var comment_post = function (req, res) {
-  var current_user = req.session.user.name;
+  var current_user_id = req.session.user._id;
   var content = req.body.content && req.body.content.trim();
   if (!content) {
     req.flash('error', '请填写具体的评论内容！');
@@ -16,7 +16,7 @@ var comment_post = function (req, res) {
   }
   var comment = {
     id: req.body.comment_id,
-    user_name: current_user,
+    user_id: current_user_id,
     time: new Date(),
     content: content
   };
@@ -37,16 +37,16 @@ var del_com = function (req, res) {
   var msg_id = params.msg_id;
   var comment_id = params.com_id;
   var del_type = parseInt(params.del_type);
-  var current_user = req.session.user.name;
+  var current_user_id = req.session.user._id;
   var query_string = {"_id": ObjectID(msg_id)};
   var pull_query = {id: comment_id};
 
   switch (del_type) {
     case 1:
-      pull_query.user_name = current_user;
+      pull_query.user_id = current_user_id;
       break;
     case 2:
-      query_string.user_name = current_user;
+      query_string.user_id = current_user_id;
       break;
     default:
       req.flash('error', '您没有删除此条评论的权限！');

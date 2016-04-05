@@ -14,7 +14,10 @@ var commentSchema = new Schema({
     type: Number,
     unique: true
   },
-  user_name: String,
+  user_id: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
   time: {
     type: Date,
     default: new Date()
@@ -26,7 +29,10 @@ var commentSchema = new Schema({
 });
 
 var messageSchema = new Schema({
-  user_name: String,
+  user_id: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
   content: String,
   time: {
     type: Date,
