@@ -109,4 +109,4 @@ module.exports = {
   edit_get: edit_get,
   edit_post: edit_post,
   user_get: user_get
-}
+};
