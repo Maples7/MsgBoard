@@ -21,7 +21,7 @@
     "connect-flash": "0.1.1",
     "markdown": "0.5.0",
     "multer": "0.1.8",
-    "mongoose": "4.3.5",
+    "mongoose": "5.7.6",
     "bluebird": "3.1.1",
     "helmet": "1.1.0"
   }
